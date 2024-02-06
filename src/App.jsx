@@ -33,14 +33,15 @@ function App() {
         <Routes>
           <Route path="/" element={
           <section>
-          {allStarships.map((starship, idx) =>
-            <Link 
-              to={`/starships/${idx}`}
-              key={idx}
-            >
-              {starship.name}
-            </Link>
-          )}
+          {allStarships.map((starship, idx) => {
+              const starshipID = (starship.url).split('https://swapi.dev/api/starships/')[1]
+              return (<Link 
+                to={`/starships/${starshipID}`}
+                key={idx}
+              >
+                {starship.name}
+              </Link>)
+          })}
           </section>} />         
           <Route path="/starships/:idx" element={<Starship />} />
         </Routes>
