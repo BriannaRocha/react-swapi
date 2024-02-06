@@ -1,38 +1,49 @@
 // npm modules
 import { useState, useEffect } from "react"
-import React, { Component } from 'react'
+import { Route, Link, Routes } from "react-router-dom"
 
 //css
 import './App.css'
 
 // components
-// import SearchForm from "../../components/SearchForm/SearchForm"
-// import SpellCard from "../../components/SpellCard/SpellCard"
+import Starship from "./components/Starship/Starship"
 
 // services
-import { getAllStarships } from "../../services/sw-api"
+import { getAllStarships } from "./services/sw-api"
 
 function App() {
-  const [starshipList, setStarshipList] = useState([])
+  const [allStarships, getStarshipsResult] = useState([])
 
   useEffect(() => {
-    const fetchStarshipList = async () => {
-      const starshipData = await getAllStarships()
-      setStarshipList(starshipData)
+    const starships = async () => {
+      const starships = await getAllStarships()
+      getStarshipsResult(starships.results)
     }
-    fetchStarshipList()
+    starships()
   }, [])
 
+  if(!allStarships.length) return <h1>Loading Starships...</h1>
 
   return (
     <>
       <div className='App'>
-        <head className='App-Header'>
+        <header className='App-Header'>
           STAR WARS STARSHIPS
-        </head>
-        <section>
-          
-        </section>
+        </header>
+        <Routes>
+          <Route path="/" element={
+          <section>
+          {allStarships.map((starship, idx) =>
+            <Link 
+              to={`/starships/${idx}`}
+              key={idx}
+            >
+              {starship.name}
+            </Link>
+          )}
+          </section>} />         
+          <Route path="/starships/:idx" element={<Starship />} />
+        </Routes>
       </div>
     </>
   )
