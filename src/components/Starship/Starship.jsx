@@ -1,8 +1,9 @@
 // npm modules
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+import { Link } from "react-router-dom"
 
-// // services
+// services
 import { getStarship } from "../../services/sw-api"
 
 // css
@@ -24,10 +25,11 @@ const Starship = () => {
     <>
       <div className="Starship">
         <div className="Starship-starship">
-          <span>Starship Name:</span>
+          <span>Name:</span>
           <span>{starshipDetails.name}</span>
-          <span>Starship Model:</span>
+          <span>Model:</span>
           <span>{starshipDetails.model}</span>
+          <Link to='/'>RETURN</Link>
         </div>
       </div>
     </>
